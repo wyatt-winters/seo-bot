@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SEO Bot — Static Site Auditor</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-icon" aria-hidden="true">◎</span>
+        <div>
+          <h1>SEO Bot</h1>
+          <p class="tagline">Static site auditor — runs entirely in your browser</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button type="button" id="btn-export-json" class="btn btn-ghost" disabled>Export JSON</button>
+        <button type="button" id="btn-export-html" class="btn btn-ghost" disabled>Export Report</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+    <section class="panel input-panel">
+      <h2>Scan source</h2>
+      <div class="tabs" role="tablist">
+        <button type="button" class="tab active" data-tab="url" role="tab" aria-selected="true">URL</button>
+        <button type="button" class="tab" data-tab="upload" role="tab" aria-selected="false">Upload HTML</button>
+        <button type="button" class="tab" data-tab="paste" role="tab" aria-selected="false">Paste HTML</button>
+        <button type="button" class="tab" data-tab="sitemap" role="tab" aria-selected="false">Sitemap</button>
+      </div>
+
+      <div class="tab-panel active" data-panel="url">
+        <label for="url-input">Page URL</label>
+        <div class="input-row">
+          <input type="url" id="url-input" placeholder="https://yoursite.com/page.html" autocomplete="url">
+          <button type="button" id="btn-scan-url" class="btn btn-primary">Scan URL</button>
+        </div>
+        <p class="hint">Works for same-origin pages on your domain. For external sites, use Upload or Paste.</p>
+      </div>
+
+      <div class="tab-panel" data-panel="upload">
+        <label for="file-input">HTML files (single or batch)</label>
+        <input type="file" id="file-input" accept=".html,.htm,.xhtml" multiple>
+        <button type="button" id="btn-scan-files" class="btn btn-primary" disabled>Scan files</button>
+      </div>
+
+      <div class="tab-panel" data-panel="paste">
+        <label for="paste-input">Paste page HTML</label>
+        <textarea id="paste-input" rows="8" placeholder="&lt;!DOCTYPE html&gt;&#10;&lt;html&gt;..."></textarea>
+        <div class="input-row">
+          <input type="text" id="paste-url" placeholder="Optional: page URL for context (https://...)">
+          <button type="button" id="btn-scan-paste" class="btn btn-primary">Scan HTML</button>
+        </div>
+      </div>
+
+      <div class="tab-panel" data-panel="sitemap">
+        <label for="sitemap-input">Sitemap XML (upload or paste)</label>
+        <input type="file" id="sitemap-file" accept=".xml,.txt">
+        <textarea id="sitemap-paste" rows="6" placeholder="&lt;?xml version=&quot;1.0&quot;?&gt;&#10;&lt;urlset&gt;..."></textarea>
+        <div class="input-row">
+          <label class="checkbox-label">
+            <input type="checkbox" id="sitemap-fetch" checked>
+            Try fetching each URL (same-origin only)
+          </label>
+          <button type="button" id="btn-scan-sitemap" class="btn btn-primary">Scan sitemap</button>
+        </div>
+      </div>
+
+      <div id="status-bar" class="status-bar hidden" role="status" aria-live="polite"></div>
+    </section>
+
+    <section id="summary" class="panel summary-panel hidden">
+      <h2>Overview</h2>
+      <div class="score-ring-wrap">
+        <div class="score-ring" id="score-ring">
+          <span class="score-value" id="score-value">—</span>
+          <span class="score-label">SEO Score</span>
+        </div>
+        <div class="summary-stats" id="summary-stats"></div>
+      </div>
+    </section>
+
+    <section id="results" class="results hidden">
+      <div class="results-toolbar">
+        <h2>Audit results</h2>
+        <div class="filter-row">
+          <button type="button" class="filter-btn active" data-filter="all">All</button>
+          <button type="button" class="filter-btn" data-filter="error">Errors</button>
+          <button type="button" class="filter-btn" data-filter="warning">Warnings</button>
+          <button type="button" class="filter-btn" data-filter="pass">Passed</button>
+        </div>
+      </div>
+      <div id="page-results"></div>
+    </section>
+
+    <section id="empty-state" class="empty-state">
+      <div class="empty-icon" aria-hidden="true">◎</div>
+      <h2>Ready to audit</h2>
+      <p>Enter a URL, upload HTML files, or paste markup. Everything runs client-side — upload this folder to cPanel and open <code>index.html</code>.</p>
+      <ul class="feature-list">
+        <li>Title, meta description &amp; canonical checks</li>
+        <li>Heading hierarchy &amp; image alt text</li>
+        <li>Open Graph, Twitter Cards &amp; JSON-LD</li>
+        <li>Link audit &amp; robots meta</li>
+        <li>Batch scan via sitemap.xml</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>SEO Bot v1.0 — no server required. Data never leaves your browser unless you export.</p>
+  </footer>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
